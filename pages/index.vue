@@ -27,6 +27,7 @@
     <v-container>
       <p v-if="boards.length < 1" class="gery--text">No boards yet.</p>
       <div v-else>
+        <p class="text-h4">My Boards</p>
           <v-row>
             <v-col
               cols="12"
@@ -38,6 +39,9 @@
               <nuxt-link :to="'/boards/' + board.id">
                 <v-card>
                   <v-card-title>{{ board.name }}</v-card-title>
+                  <v-card-text>
+                    <p>{{ (board.lists && board.lists.length) || 0 }} lists</p>
+                  </v-card-text>
                 </v-card>
               </nuxt-link>
             </v-col>

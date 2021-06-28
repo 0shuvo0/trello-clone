@@ -62,8 +62,12 @@
               v-model="createListModel"
               :rules="createListModelRules"
             >
-
             </v-text-field>
+            <v-select
+                label="Select a color"
+                :items="colors"
+                v-model="colorModel"
+            ></v-select>
           </v-form>
         </v-card-text>
         <v-card-actions>
@@ -108,6 +112,8 @@ export default {
       v => v.length > 2 || 'List name must be atleast 3 characters',
       v => v.length < 21 || 'List name must be at most 20 characters'
     ],
+    colors: "red green blue yellow brown black".split(" "),
+    colorModel: "primary",
     valid: false,
     loading: false,
     snackbar: false,
@@ -126,10 +132,10 @@ export default {
       this.loading = true
       try{
         if(this.board.lists){
-          this.board.lists.push({ name: this.createListModel })
+          this.board.lists.push({ name: this.createListModel, color: this.colorModel })
         }else{
           this.board.lists = []
-          this.board.lists.push({ name: this.createListModel })
+          this.board.lists.push({ name: this.createListModel, color: this.colorModel })
         }
         await this.$fire.firestore
           .collection("users")
@@ -149,6 +155,7 @@ export default {
       }
     },
     async deleteBoard(){
+      if(!confirm("Are you sure you want to delete this board?")) return
       this.deleting = true
       try{
         await $nuxt.$fire.firestore

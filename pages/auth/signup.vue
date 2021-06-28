@@ -14,7 +14,7 @@
                 <v-col
                   cols="12"
                 >
-                  <h1 class="text-h2 font-weight-bold primary--text">Login to your account</h1>
+                  <h1 class="text-h2 font-weight-bold primary--text">Create account</h1>
                 </v-col>
 
                 <v-col
@@ -47,10 +47,10 @@
                         color="primary"
                         :loading="loading"
                         :disabled="loading || !valid"
-                        @click="login"
-                    >Login</v-btn>
+                        @click="signup"
+                    >signup</v-btn>
                     <span class="grey--text mx-2">or</span>
-                    <nuxt-link to="/auth/signup"><span class="blue--text">signup</span></nuxt-link>
+                    <nuxt-link to="/auth/login"><span class="blue--text">login</span></nuxt-link>
                 </v-col>
             </v-row>
           </v-col>
@@ -85,15 +85,15 @@
       snackbarText: "hello"
     }),
     methods: {
-      async login(){
+      async signup(){
         this.loading = true
         try{
-          let user = await this.$fire.auth.signInWithEmailAndPassword(this.email, this.pwd)
+          let user = await this.$fire.auth.createUserWithEmailAndPassword(this.email, this.pwd)
           if(user){
             $nuxt.$router.push("/")
           }else{
             this.snackbar = true
-            this.snackbarText = "Could not login"
+            this.snackbarText = "Could not create account"
             this.loading = false
           }
         }catch(err){

@@ -1,7 +1,7 @@
 <template>
     <v-card
-        style="min-height: 80vh"
-        @drop="alert(3)"
+        style="min-height: 83vh"
+        @drop="handleDrop"
     >
         <v-app-bar flat>
             <v-toolbar-title>{{ list.name }}</v-toolbar-title>
@@ -16,7 +16,7 @@
         <v-card-text>
             <p class="grey--text text-center" v-if="!list.list || list.list.length < 1">No items yet.</p>
             <div v-else>
-                <ListItem v-for="(item, index) in list.list" :key="index" :item="item" :boardId="boardId" :listId="listId" :itemId="index" />
+                <ListItem v-for="(item, index) in list.list" :key="index" :item="item" :color="list.color" :boardId="boardId" :listId="listId" :itemId="index" />
             </div>
         </v-card-text>
 
@@ -33,7 +33,6 @@
                     v-model="createItemModel"
                     :rules="createItemModelRules"
                     >
-
                     </v-text-field>
                 </v-form>
                 </v-card-text>
@@ -144,6 +143,9 @@ export default {
             }catch(err){
                 console.log(err)
             }
+        },
+        handleDrop(){
+            alert(0)
         }
     }
 }

@@ -2,7 +2,7 @@
     <v-alert
         border="left"
         colored-border
-        color="primary"
+        :color="color"
         elevation="1"
         class="item"
         draggable="true"
@@ -18,7 +18,7 @@
 
 <script>
 export default {
-    props: ["item", "boardId", "listId", "itemId"],
+    props: ["item", "color", "boardId", "listId", "itemId"],
     methods: {
         async deleteItem(){
             try{
