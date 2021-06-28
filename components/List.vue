@@ -1,7 +1,7 @@
 <template>
     <v-card
         style="min-height: 83vh"
-        @drop="handleDrop"
+         @dragover="dragover" @drop="drop"
     >
         <v-app-bar flat>
             <v-toolbar-title>{{ list.name }}</v-toolbar-title>
@@ -52,12 +52,12 @@
             </v-card>
         </v-overlay>
 
-    <v-snackbar
-      v-model="snackbar"
-      timeout="3000"
-    >
-      {{ snackbarText}}
-    </v-snackbar>
+        <v-snackbar
+            v-model="snackbar"
+            timeout="3000"
+        >
+            {{ snackbarText}}
+        </v-snackbar>
     </v-card>
 </template>
 
@@ -144,8 +144,38 @@ export default {
                 console.log(err)
             }
         },
-        handleDrop(){
-            alert(0)
+        dragover(e){
+            e.preventDefault()
+        },
+        async drop(e){
+            let dragData = this.$store.state.dragData
+            if(this.listId == dragData.listId) return
+            try{
+               let boardRef = $nuxt.$fire.firestore
+                .collection("users")
+                .doc($nuxt.$fire.auth.currentUser.uid)
+                .collection("boards")
+                .doc(this.boardId)
+
+                let doc = await boardRef
+                    .get()
+                let board = doc.data()
+                board.id = doc.id
+                
+                let item = board.lists[dragData.listId].list[dragData.itemId]
+                
+                if(!board.lists[this.listId].list){
+                    board.lists[this.listId].list = []
+                }
+
+                board.lists[this.listId].list.push(item)
+                board.lists[dragData.listId].list.splice(dragData.itemId, 1)
+                
+                await boardRef
+                    .update(board, { merge: true })
+            }catch(err){
+                console.log(err)
+            }
         }
     }
 }

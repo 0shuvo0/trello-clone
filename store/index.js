@@ -22,10 +22,14 @@ const actions = {
     SET_USER(state, user) {
       state.user = user
     },
+    SET_DRAGDATA(state, data) {
+      state.dragData = data
+    }
   }
   
   const state = () => ({
     user: null,
+    dragData: {}
   })
   
   const getters = {

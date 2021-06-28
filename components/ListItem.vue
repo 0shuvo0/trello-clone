@@ -5,7 +5,9 @@
         :color="color"
         elevation="1"
         class="item"
-        draggable="true"
+        :draggable="true"
+        @dragstart="dragstart"
+        @dragend="dragend"
     >
         <p>{{ item }}
             <v-btn icon class="del" @click="deleteItem">
@@ -40,6 +42,17 @@ export default {
             }catch(err){
                 console.log(err)
             }
+        },
+        dragstart(e){
+            e.target.style.opacity = 0.5
+            this.$store.commit("SET_DRAGDATA", {
+                boardId: this.boardId,
+                listId: this.listId,
+                itemId: this.itemId
+            })
+        },
+        dragend(e){
+            e.target.style.opacity = 1
         }
     }
 }

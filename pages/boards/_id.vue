@@ -10,13 +10,8 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <nuxt-link to="/">
-        <v-btn icon>
-          <v-icon>mdi-home</v-icon>
-        </v-btn>
+        go back
       </nuxt-link>
-      <v-btn icon>
-        <v-icon>mdi-delete</v-icon>
-      </v-btn>
     </v-app-bar>
 
     <v-container>
