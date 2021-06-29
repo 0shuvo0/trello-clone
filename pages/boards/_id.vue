@@ -14,7 +14,13 @@
       </nuxt-link>
     </v-app-bar>
 
-    <v-container>
+    <p v-if="loadingLists" class="text-center mt-4">
+      <v-progress-circular
+        indeterminate
+        color="primary"
+      ></v-progress-circular>
+    </p>
+    <v-container v-else>
       <p class="pb-2">
         <v-btn
           color="red"
@@ -115,7 +121,8 @@ export default {
     snackbarText: "",
     board: {},
     unsubscribe: () => {},
-    deleting: false
+    deleting: false,
+    loadingLists: true
   }),
   methods: {
     async createList(){
@@ -181,6 +188,7 @@ export default {
           }else{
             this.board = {}
           }
+          this.loadingLists = false
         })
     }catch(err){
       console.log(err)

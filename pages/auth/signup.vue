@@ -28,13 +28,25 @@
                 ></v-text-field>
                 </v-col>
 
-                 <v-col
+                <v-col
                     cols="12"
                 >
                 <v-text-field
                     v-model="pwd"
                     :rules="pwdRules"
                     label="Password"
+                    type="password"
+                    required
+                ></v-text-field>
+                </v-col>
+
+                <v-col
+                    cols="12"
+                >
+                <v-text-field
+                    v-model="cpwd"
+                    :rules="cpwdRules"
+                    label="Confirm password"
                     type="password"
                     required
                 ></v-text-field>
@@ -67,23 +79,32 @@
 
 <script>
   export default {
-    data: () => ({
-      loading: false,
-      valid: false,
-      pwd: '',
-      pwdRules: [
-        v => !!v || 'Password is required',
-        v => v.length > 5 || 'Password must be atleast 6 characters',
-        v => v.length < 21 || 'Password must be at most 20 characters',
-      ],
-      email: '',
-      emailRules: [
-        v => !!v || 'E-mail is required',
-        v => /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(v) || 'E-mail must be valid',
-      ],
-      snackbar: false,
-      snackbarText: "hello"
-    }),
+    data(){
+      return {
+        loading: false,
+        valid: false,
+        pwd: '',
+        pwdRules: [
+          v => !!v || 'Password is required',
+          v => v.length > 5 || 'Password must be atleast 6 characters',
+          v => v.length < 21 || 'Password must be at most 20 characters',
+        ],
+        cpwd: '',
+        cpwdRules: [
+          v => !!v || 'Confirm your password',
+          v => v.length > 5 || 'Password must be atleast 6 characters',
+          v => v.length < 21 || 'Password must be at most 20 characters',
+          v => v === this.pwd || 'Passwords do not match'
+        ],
+        email: '',
+        emailRules: [
+          v => !!v || 'E-mail is required',
+          v => /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(v) || 'E-mail must be valid',
+        ],
+        snackbar: false,
+        snackbarText: "hello"
+      }
+    },
     methods: {
       async signup(){
         this.loading = true

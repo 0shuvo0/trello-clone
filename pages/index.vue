@@ -24,7 +24,13 @@
       </span>
     </v-app-bar>
 
-    <v-container>
+    <p v-if="loadingBoards" class="text-center mt-4">
+      <v-progress-circular
+        indeterminate
+        color="primary"
+      ></v-progress-circular>
+    </p>
+    <v-container v-else>
       <p v-if="boards.length < 1" class="gery--text">No boards yet.</p>
       <div v-else>
         <p class="text-h4">My Boards</p>
@@ -106,7 +112,8 @@ export default {
     snackbar: false,
     snackbarText: "",
     boards: [],
-    unsubscribe: () => {}
+    unsubscribe: () => {},
+    loadingBoards: true
   }),
   mounted(){
     try{
@@ -124,6 +131,7 @@ export default {
               this.boards.push(data)
             }
           }
+          this.loadingBoards = false
         })
     }catch(err){
       console.log(err)

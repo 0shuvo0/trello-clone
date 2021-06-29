@@ -124,6 +124,7 @@ export default {
             }
         },
         async deleteList(){
+            if(!confirm("Do you really want to delete this list?")) return
             try{
                let boardRef = $nuxt.$fire.firestore
                 .collection("users")
